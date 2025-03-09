@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Image Gallery</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff7eb3, #ff758c, #ff7eb3);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gallery-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+        }
+
+        .gallery {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        img {
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.4s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: white;
+            color: #ff477e;
+            transition: 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: #ff477e;
+            color: white;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <h2>🌟 My Stunning Image Gallery 🌟</h2>
+        <div class="gallery">
+            <button onclick="prevImage()">&#10094; Prev</button>
+            <img id="galleryImg" src="imageGallery/cat1.jpg" alt="Gallery Image">
+            <button onclick="nextImage()">Next &#10095;</button>
+        </div>
+        <div class="controls">
+            <button onclick="toggleSlideshow()">Start Slideshow</button>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            "imageGallery/cat1.jpg",
+            "imageGallery/cat2.jpg",
+            "imageGallery/cat3.jpg",
+            "imageGallery/cat4.jpg",
+            "imageGallery/cat5.jpg",
+            "imageGallery/cat.png"
+        ];
+        let currentIndex = 0;
+        let slideshowInterval;
+        let isSlideshowRunning = false;
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImage();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImage();
+        }
+
+        function updateImage() {
+            document.getElementById("galleryImg").src = images[currentIndex];
+        }
+
+        function toggleSlideshow() {
+            if (isSlideshowRunning) {
+                clearInterval(slideshowInterval);
+                isSlideshowRunning = false;
+                document.querySelector(".controls button").textContent = "Start Slideshow";
+            } else {
+                slideshowInterval = setInterval(nextImage, 2000);
+                isSlideshowRunning = true;
+                document.querySelector(".controls button").textContent = "Stop Slideshow";
+            }
+        }
+    </script>
+</body>
+</html>
